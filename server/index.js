@@ -32,13 +32,18 @@ app.get('/api/health', async (req, res) => {
       database: result.rows[0].database,
     });
   } catch (error) {
-    console.error('Database health check failed:', {
-      name: error.name,
-      message: error.message,
-      code: error.code,
-      detail: error.detail,
-    });
-
+    
+   console.error('Database health check failed:', {
+  name: error.name,
+  message: error.message,
+  code: error.code,
+  errors: error.errors?.map((e) => ({
+    message: e.message,
+    code: e.code,
+    address: e.address,
+    port: e.port,
+  })),
+});
     res.status(500).json({
       error: 'Database connection failed',
     });
