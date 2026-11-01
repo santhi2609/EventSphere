@@ -32,12 +32,19 @@ app.get('/api/health', async (req, res) => {
       database: result.rows[0].database,
     });
   } catch (error) {
-    console.error('Health check error:', error.message);
+    console.error('Database health check failed:', {
+      name: error.name,
+      message: error.message,
+      code: error.code,
+      detail: error.detail,
+    });
+
     res.status(500).json({
       error: 'Database connection failed',
     });
   }
 });
+
 
 // ==========================================
 // AUTHENTICATION: ADMIN LOGIN
