@@ -31,23 +31,17 @@ app.get('/api/health', async (req, res) => {
       message: 'EventSphere backend is running',
       database: result.rows[0].database,
     });
-  } catch (error) {
-    
-   console.error('Database health check failed:', {
-  name: error.name,
-  message: error.message,
-  code: error.code,
-  errors: error.errors?.map((e) => ({
-    message: e.message,
-    code: e.code,
-    address: e.address,
-    port: e.port,
-  })),
-});
-    res.status(500).json({
-      error: 'Database connection failed',
-    });
-  }
+ } catch (error) {
+  console.error('FULL DATABASE ERROR:', error);
+  console.error(
+    'ERROR DETAILS:',
+    JSON.stringify(error, Object.getOwnPropertyNames(error), 2)
+  );
+
+  res.status(500).json({
+    error: 'Database connection failed',
+  });
+}
 });
 
 
