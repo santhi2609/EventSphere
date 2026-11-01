@@ -30,7 +30,11 @@ import { QRCodeSVG } from "qrcode.react";
 import { Html5Qrcode, Html5QrcodeScanner } from "html5-qrcode";
 import "./App.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? "http://localhost:5000/api"
+    : "https://eventsphere-m3nd.onrender.com/api");
 
 const navigation = [
   { label: "Dashboard", icon: LayoutDashboard },
